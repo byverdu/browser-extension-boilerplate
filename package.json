@@ -1,0 +1,20 @@
+{
+  "name": "browser-extension-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byverdu/browser-extension-boilerplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/byverdu/browser-extension-boilerplate/issues"
+  },
+  "homepage": "https://github.com/byverdu/browser-extension-boilerplate#readme"
+}
