@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "Styles/*": ["styles/*"],
+      "Types/*": ["types/*"],
+      "Lib/*": ["lib/*"]
+    },
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "ES2020",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "es2015"],
+    "types": ["chrome", "node"]
+  },
+  "include": ["src/**/*"]
+}
