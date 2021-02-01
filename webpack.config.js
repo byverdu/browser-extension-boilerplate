@@ -1,38 +1,38 @@
-const path = require('path');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require ( 'path' );
+const ForkTsCheckerWebpackPlugin = require ( 'fork-ts-checker-webpack-plugin' );
+const { TsconfigPathsPlugin } = require ( 'tsconfig-paths-webpack-plugin' );
+const { CleanWebpackPlugin } = require ( 'clean-webpack-plugin' );
+const HtmlWebpackPlugin = require ( 'html-webpack-plugin' );
 
-const ENV = process.env.ENV;
+const { ENV } = process.env;
 
 module.exports = {
   entry: './src/index.tsx',
   mode: ENV,
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve ( __dirname, 'build' ),
   },
   devtool: ENV === 'development' ? 'source-map' : undefined,
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.ts', '.tsx', '.js', '.json'],
-    modules: [path.join(__dirname, 'node_modules')],
+    extensions: [ '.ts', '.tsx', '.js', '.json' ],
+    modules: [ path.join ( __dirname, 'node_modules' ) ],
     plugins: [
-      new TsconfigPathsPlugin({
+      new TsconfigPathsPlugin ( {
         configFile: './tsconfig.json',
-        baseUrl: 'src'
-      }),
+        baseUrl: 'src',
+      } ),
     ],
   },
   plugins: [
-    new CleanWebpackPlugin({
+    new CleanWebpackPlugin ( {
       cleanStaleWebpackAssets: false,
-    }),
-    new ForkTsCheckerWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: './src/index.html'
-    })
+    } ),
+    new ForkTsCheckerWebpackPlugin (),
+    new HtmlWebpackPlugin ( {
+      template: './src/index.html',
+    } ),
   ],
   module: {
     rules: [
@@ -43,11 +43,11 @@ module.exports = {
           {
             loader: 'ts-loader',
             options: {
-              transpileOnly: true
-            }
-          }
-        ]
+              transpileOnly: true,
+            },
+          },
+        ],
       },
-    ]
-  }
+    ],
+  },
 };

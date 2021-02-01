@@ -1,11 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "paths": {
-      "Styles/*": ["styles/*"],
-      "Types/*": ["types/*"],
-      "Lib/*": ["lib/*"]
-    },
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
