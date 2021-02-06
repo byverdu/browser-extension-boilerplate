@@ -1,38 +1,58 @@
-const path = require ( 'path' );
-const ForkTsCheckerWebpackPlugin = require ( 'fork-ts-checker-webpack-plugin' );
-const { TsconfigPathsPlugin } = require ( 'tsconfig-paths-webpack-plugin' );
-const { CleanWebpackPlugin } = require ( 'clean-webpack-plugin' );
-const HtmlWebpackPlugin = require ( 'html-webpack-plugin' );
+const path = require('path');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const {TsconfigPathsPlugin} = require('tsconfig-paths-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
-const { ENV } = process.env;
+const {ENV} = process.env;
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: {
+    popup: './src/popup.ts',
+    content: './src/content.ts',
+    background: './src/background.ts',
+  },
   mode: ENV,
   output: {
-    filename: 'bundle.js',
-    path: path.resolve ( __dirname, 'build' ),
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'build'),
   },
   devtool: ENV === 'development' ? 'source-map' : undefined,
   resolve: {
-    // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [ '.ts', '.tsx', '.js', '.json' ],
-    modules: [ path.join ( __dirname, 'node_modules' ) ],
+    extensions: ['.ts', '.tsx', '.js', '.json', '.scss', 'css'],
+    modules: [path.join(__dirname, 'node_modules')],
     plugins: [
-      new TsconfigPathsPlugin ( {
+      new TsconfigPathsPlugin({
         configFile: './tsconfig.json',
         baseUrl: 'src',
-      } ),
+      }),
     ],
   },
   plugins: [
-    new CleanWebpackPlugin ( {
+    new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
-    } ),
-    new ForkTsCheckerWebpackPlugin (),
-    new HtmlWebpackPlugin ( {
-      template: './src/index.html',
-    } ),
+    }),
+    new ForkTsCheckerWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: './src/popup.html',
+      filename: 'popup.html',
+      excludeChunks: ['content', 'background'],
+    }),
+    new CopyPlugin([
+      {
+        from: 'src/images/*',
+        to: './images',
+        flatten: true,
+      },
+      {
+        from: 'manifest.json',
+        to: './',
+      },
+      {
+        from: 'node_modules/webextension-polyfill/dist/browser-polyfill.min.js',
+      },
+    ]),
   ],
   module: {
     rules: [
@@ -46,6 +66,23 @@ module.exports = {
               transpileOnly: true,
             },
           },
+        ],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'webpack-typings-for-css',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[name]__[local]--[hash:base64:5]',
+                exportLocalsConvention: 'camelCase',
+              },
+            },
+          },
+          'sass-loader',
         ],
       },
     ],
