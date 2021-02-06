@@ -1,6 +1,10 @@
 import { wrapperBrowserAPI, linksSavedHandler, getActiveTabHandler } from 'api';
 
-wrapperBrowserAPI.onMessage ( async ( msg, sender ) => {
+const { onMessage, onInstalled } = wrapperBrowserAPI;
+
+onInstalled ();
+
+onMessage ( async ( msg, sender ) => {
   if ( msg && msg.type ) {
     switch ( msg.type ) {
     case ( 'links-saved' ):
