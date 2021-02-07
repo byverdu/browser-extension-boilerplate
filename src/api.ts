@@ -1,9 +1,11 @@
 import { browser } from 'webextension-polyfill-ts';
 import { WrapperBrowserAPI } from 'types';
 
-export const linksSavedHandler = async (): Promise<string|boolean> => browser.runtime.lastError ? browser.runtime.lastError.message : true;
+export async function linksSavedHandler (): Promise<string|boolean> {
+  return browser.runtime.lastError ? browser.runtime.lastError.message : true;
+}
 
-export const getActiveTabHandler = async (): Promise<string> => {
+export async function getActiveTabHandler (): Promise<string> {
   if ( browser.runtime.lastError ) {
     return browser.runtime.lastError.message;
   }
@@ -12,6 +14,11 @@ export const getActiveTabHandler = async (): Promise<string> => {
   const [ activeTab ] = tab;
 
   return activeTab.url;
+};
+
+export const getRandomNumber = ( qtty: number = 5 ): string => {
+  const array = new Uint32Array ( qtty );
+  return window.crypto.getRandomValues ( array ).join ( '-' );
 };
 
 // workaround to be able to use extension for old opened tabs
@@ -30,6 +37,12 @@ function afterInstallScript () {
 }
 
 export const wrapperBrowserAPI: WrapperBrowserAPI = {
+  getExtensionName: () => {
+    const { name } = browser.runtime.getManifest ();
+    const { id } = browser.runtime;
+
+    return `${id}-${name}`;
+  },
   onInstalled: () => browser.runtime.onInstalled.addListener ( afterInstallScript ),
   setStorage: ( key, value ) => browser.storage.local.set ( { [ key ]: value } ),
   getStorage: ( key ) => browser.storage.local.get ( key ),

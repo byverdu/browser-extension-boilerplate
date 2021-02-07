@@ -9,9 +9,9 @@ const {ENV} = process.env;
 
 module.exports = {
   entry: {
-    popup: './src/popup.ts',
-    content: './src/content.ts',
-    background: './src/background.ts',
+    popup: './src/pages/popup/index.tsx',
+    content: './src/pages/content/index.tsx',
+    background: './src/scripts/background.ts',
   },
   mode: ENV,
   output: {
@@ -35,7 +35,7 @@ module.exports = {
     }),
     new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: './src/popup.html',
+      template: './src/pages/popup/popup.html',
       filename: 'popup.html',
       excludeChunks: ['content', 'background'],
     }),
