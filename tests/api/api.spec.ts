@@ -8,7 +8,7 @@ const [browser, mockBrowser, mockBrowserNode] = deepMock<Browser>(
 
 jest.mock('webextension-polyfill-ts', () => ({browser}));
 
-const wrapperBrowserAPI = require('../src/api').wrapperBrowserAPI;
+const wrapperBrowserAPI = require('../../src/api').wrapperBrowserAPI;
 const {getStorage, setStorage, sendMessage, onMessage} = wrapperBrowserAPI;
 
 describe('Web-Extension API', () => {
