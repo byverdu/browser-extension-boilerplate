@@ -3,44 +3,52 @@ import { render } from 'react-dom';
 
 import { wrapperBrowserAPI } from 'api';
 import { Link,ExtensionMessages } from 'types';
-
 import styles from './content.scss';
 
 const { setStorage, sendMessage, getExtensionName } = wrapperBrowserAPI;
 const extensionName = getExtensionName ();
-const linksSaved: ExtensionMessages = 'links-saved'
+const linksSaved: ExtensionMessages = 'links-saved';
 
-const App = () => {
+export const App = () => {
   const [ linksCount, setLinksCount ] = useState<number> ( 0 );
   const container = useRef<HTMLDivElement> ();
   const saveLinks = async ( links ) => {
     const oldStorage = await wrapperBrowserAPI.getStorage ( linksSaved );
-    const newValues = {
-      [ linksSaved ]: {
-        ...oldStorage[ linksSaved ],
-        ...links
-      }
+    const newStorage = {
+      ...oldStorage[ linksSaved ],
+      ...links
     };
-
-    return await setStorage ( linksSaved, newValues );
+    return await setStorage ( linksSaved, newStorage );
   };
 
   useEffect ( () => {
+    let toUpdate = true;
     const links: Link[] = [
       ...document.querySelectorAll ( 'a' ),
     ]
-      .map ( ( { href, textContent } ) => ( { href, textContent } ) )
+      .map ( ( { href, textContent } ) => ( {
+        href, textContent 
+      } ) )
       .filter ( ( link ) => link.textContent );
+    const newX = window.location.hostname;
 
-    saveLinks ( links ).then ( ( resp ) => {
-      console.log ( 'storage', resp );
-      sendMessage ( linksSaved )
-        .then ( resp => {
-          if ( typeof resp === 'boolean' ) {
-            setLinksCount ( links.length );
-          }
-        } );
-    } );
+    if ( toUpdate ) {
+      saveLinks ( {
+        [ newX ]: links 
+      } ).then ( ( resp ) => {
+        sendMessage ( linksSaved )
+          .then ( resp => {
+            if ( typeof resp === 'boolean' ) {
+              setLinksCount ( links.length );
+            }
+          } );
+      } );
+    }
+
+    return () => {
+      toUpdate = false;
+    };
+
   } );
 
   useEffect ( () => {
@@ -58,8 +66,11 @@ const App = () => {
   );
 };
 
-const root = document.createElement ( 'div' );
-root.setAttribute ( 'id',  extensionName );
-document.body.appendChild ( root );
+if ( process.env.ENV !== 'test' ) {
+  const root = document.createElement ( 'div' );
+  root.setAttribute ( 'id',  extensionName );
+  document.body.appendChild ( root );
+  
+  render ( <App />, document.getElementById ( extensionName ) );
+}
 
-render ( <App />, document.getElementById ( extensionName ) );

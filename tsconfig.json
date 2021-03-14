@@ -3,7 +3,8 @@
     "baseUrl": "src",
     "paths": {
       "types/*": ["types/*"],
-      "api/*": ["api/*"]
+      "api/*": ["api/*"],
+      "Components/*": ["Components/*"]
     },
     "sourceMap": true,
     "noImplicitAny": false,
@@ -13,7 +14,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["dom", "es2018", "dom.iterable"],
-    "types": ["node", "jest", "enzyme"]
+    "types": ["node", "jest", "enzyme", "@testing-library/jest-dom"],
   },
   "include": ["src/**/*", "tests/**/*"]
 }
