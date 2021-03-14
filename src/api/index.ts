@@ -25,15 +25,22 @@ export const getRandomNumber = ( qtty: number = 5 ): string => {
 // after the extension is installed. For those tabs an error will be thrown in the console
 // due to the chrome.runtime.id has changed after updating the extension
 
-function afterInstallScript () {
-  browser.tabs.query ( {} )
-    .then ( tabs => {
-      tabs.forEach ( tab => {
-        browser.tabs.executeScript ( tab.id, { file: './content.js' } )
-          .then ( () => console.log ( 'script injected' ) )
-          .catch ( ( e ) => console.log ( e ) );
-      } );
-    } );
+async function afterInstallScript () {
+  try {
+    await wrapperBrowserAPI.setStorage ( 'links-saved', {} );
+
+    browser.tabs.query ( {} )
+      .then ( tabs => {
+        tabs.forEach ( tab => {
+          browser.tabs.executeScript ( tab.id, { file: './content.js' } )
+            .then ( () => console.log ( 'script injected' ) )
+            .catch ( ( e ) => console.log ( 'afterInstallScript tabs.executeScript', e ) );
+        } );
+      } )
+      .catch ( ( e ) => console.log ( 'afterInstallScript tabs.query', e ) );
+  } catch ( e ) {
+    console.log ( 'afterInstallScript setStorage', e );
+  }
 }
 
 export const wrapperBrowserAPI: WrapperBrowserAPI = {
