@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 
 import { Link } from 'types';
 
 import { getRandomNumber } from 'api';
 
-const ListItem: React.SFC<Link> = ( { href, textContent } ) => ( <a key={getRandomNumber ( 1 )} href={href}>{textContent}</a> );
+const ListItem: FunctionComponent<Link> = ( { href, textContent } ) => ( <a href={href}>{textContent}</a> );
 
-const List: React.SFC<{links:Link[]}> = ( { links } ) => (
-  <ul>
-    {links.map ( ( { href, textContent } ) => <ListItem href={href} textContent={textContent}/> )}
-  </ul>
-);
+const List: FunctionComponent<{links:Link[]}> = ( { links = [] } ) => {
+  const memoLinks = useMemo ( () => links, [ links ] );
+  return (
+    <ul>
+      {memoLinks.map ( ( { href, textContent } ) => <ListItem key={getRandomNumber ( 1 )} href={href} textContent={textContent}/> )}
+    </ul>
+  );
+};
 
 export default List;

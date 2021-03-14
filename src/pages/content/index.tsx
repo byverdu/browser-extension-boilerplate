@@ -27,7 +27,8 @@ export const App = () => {
       ...document.querySelectorAll ( 'a' ),
     ]
       .map ( ( { href, textContent } ) => ( {
-        href, textContent 
+        href,
+        textContent 
       } ) )
       .filter ( ( link ) => link.textContent );
     const newX = window.location.hostname;

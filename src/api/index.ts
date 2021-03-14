@@ -10,7 +10,10 @@ export async function getActiveTabHandler (): Promise<string> {
     return browser.runtime.lastError.message;
   }
 
-  const tab = await browser.tabs.query ( { active: true, currentWindow: true } );
+  const tab = await browser.tabs.query ( {
+    active: true,
+    currentWindow: true 
+  } );
   const [ activeTab ] = tab;
 
   return activeTab.url;
@@ -27,12 +30,15 @@ export const getRandomNumber = ( qtty: number = 5 ): string => {
 
 async function afterInstallScript () {
   try {
-    await wrapperBrowserAPI.setStorage ( 'links-saved', {} );
+    await wrapperBrowserAPI.setStorage ( 'links-saved', {
+    } );
 
     browser.tabs.query ( {} )
       .then ( tabs => {
         tabs.forEach ( tab => {
-          browser.tabs.executeScript ( tab.id, { file: './content.js' } )
+          browser.tabs.executeScript ( tab.id, {
+            file: './content.js' 
+          } )
             .then ( () => console.log ( 'script injected' ) )
             .catch ( ( e ) => console.log ( 'afterInstallScript tabs.executeScript', e ) );
         } );
@@ -51,8 +57,12 @@ export const wrapperBrowserAPI: WrapperBrowserAPI = {
     return `${id}-${name}`;
   },
   onInstalled: () => browser.runtime.onInstalled.addListener ( afterInstallScript ),
-  setStorage: ( key, value ) => browser.storage.local.set ( { [ key ]: value } ),
+  setStorage: ( key, value ) => browser.storage.local.set ( {
+    [ key ]: value 
+  } ),
   getStorage: ( key ) => browser.storage.local.get ( key ),
-  sendMessage: ( msg ) => browser.runtime.sendMessage ( { type: msg } ),
+  sendMessage: ( msg ) => browser.runtime.sendMessage ( {
+    type: msg 
+  } ),
   onMessage: ( callback ) => browser.runtime.onMessage.addListener ( callback )
 };

@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es6: true,
     webextensions: true,
-    'jest/globals': true
+    'jest': true
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -71,6 +71,13 @@ module.exports = {
     semi: [
       'error',
       'always'
-    ]
+    ],
+    "object-curly-newline": ["error", {
+        "ObjectExpression": "always",
+        "ObjectPattern": { "multiline": true },
+        "ImportDeclaration": "never",
+        "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+    }],
+    "object-property-newline": ["error"]
   }
 };
