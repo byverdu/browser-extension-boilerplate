@@ -2,7 +2,7 @@ jest.mock ( '../../src/api' );
 import React from 'react';
 import { render, waitFor } from './custom.render';
 import '@testing-library/jest-dom/extend-expect';
-import { App } from '../../src/pages/content';
+import { App } from '../../../src/pages/content';
 
 describe ( 'Content script app', () => {
   it ( 'should not render a message if no links present in Document', async () => {
@@ -23,12 +23,7 @@ describe ( 'Content script app', () => {
 
     await waitFor ( () => {
       expect ( getByText ( 'Hello.... this page has 3 links on it' ) ).toBeInTheDocument (); 
-      expect ( container.firstChild ).toMatchSnapshot ( `<section>
-        <a href="http://localhost/first-link">first link</a>
-        <a href="http://localhost/second-link">second link</a>
-        <a href="http://localhost/third-link">third link</a>
-        <div class="content">Hello.... this page has 3 links on it</div>
-      </section>` );
+      expect ( container.querySelectorAll ( 'a' ) ).toHaveLength ( 3 );
     } );
   } );
 
@@ -43,7 +38,21 @@ describe ( 'Content script app', () => {
       jest.runAllTimers ();
       expect ( linksMessage ).not.toBeInTheDocument ();
     } );
+  } );
 
+  it ( 'should match the snapshot', async () => {
+    const { container, getByText } = render ( <App />, {
+      withLinks: true 
+    } );
+
+    await waitFor ( () => {
+      expect ( container.firstChild ).toMatchSnapshot ( `<section>
+        <a href="http://localhost/first-link">first link</a>
+        <a href="http://localhost/second-link">second link</a>
+        <a href="http://localhost/third-link">third link</a>
+        <div class="content">Hello.... this page has 3 links on it</div>
+      </section>` );
+    } );
   } );
 } );
 

@@ -7,10 +7,15 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.json',
+    sourceType: 'module',
+    tsconfigRootDir: __dirname,
+    project: ["./tsconfig.json"],
   },
   plugins: [
     '@typescript-eslint'
+  ],
+  extends: [
+    "plugin:react-hooks/recommended"
   ],
   rules: {
     indent: [

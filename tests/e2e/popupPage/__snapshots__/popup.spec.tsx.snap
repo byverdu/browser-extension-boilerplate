@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Popup page should match the snapshot: <div>
+        <h1>localhost</h1>
+          <ul>
+            <li><a href="http://localhost/first-link">first link</a></li>
+            <li><a href="http://localhost/second-link">second link</a></li>
+            <li><a href="http://localhost/third-link">third link</a></li>
+          </ul>
+        </div> 1`] = `
+<div>
+  <h1 />
+  <ul />
+</div>
+`;

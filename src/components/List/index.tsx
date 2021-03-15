@@ -4,7 +4,7 @@ import { Link } from 'types';
 
 import { getRandomNumber } from 'api';
 
-const ListItem: FunctionComponent<Link> = ( { href, textContent } ) => ( <a href={href}>{textContent}</a> );
+const ListItem: FunctionComponent<Link> = ( { href, textContent } ) => ( <li><a href={href}>{textContent}</a></li> );
 
 const List: FunctionComponent<{links:Link[]}> = ( { links = [] } ) => {
   const memoLinks = useMemo ( () => links, [ links ] );

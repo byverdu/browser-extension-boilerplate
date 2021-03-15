@@ -1,6 +1,6 @@
-const config = require('./jest.config');
+const config = require ( './jest.config' );
 
 module.exports = {
   ...config,
-  setupFilesAfterEnv: ["<rootDir>/jestConfig/setupTestsUI.ts"]
-}
+  setupFilesAfterEnv: [ '<rootDir>/jestConfig/setupTestsUI.ts' ]
+};

@@ -33,7 +33,9 @@ async function afterInstallScript () {
     await wrapperBrowserAPI.setStorage ( 'links-saved', {
     } );
 
-    browser.tabs.query ( {} )
+    browser.tabs.query ( {
+      
+    } )
       .then ( tabs => {
         tabs.forEach ( tab => {
           browser.tabs.executeScript ( tab.id, {

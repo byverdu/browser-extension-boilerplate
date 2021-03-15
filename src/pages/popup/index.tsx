@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 
-import { wrapperBrowserAPI, getRandomNumber } from 'api';
+import { wrapperBrowserAPI } from 'api';
 import { Link } from 'types';
 
 import { List, Header } from 'Components';
@@ -13,7 +13,7 @@ interface State{
   tabHostname: string
 }
 
-const Popup = () => {
+export const Popup = () => {
   const [ state, setState ] = useState<State> ( {
     links: [],
     tabHostname: '' 
@@ -29,7 +29,7 @@ const Popup = () => {
         } );
       } );
     } );
-  } );
+  }, [] );
 
   const { links, tabHostname } = state;
 
@@ -41,4 +41,6 @@ const Popup = () => {
   );
 };
 
-render ( <Popup />, document.getElementById ( 'root' ) );
+if ( process.env.ENV !== 'test' ) {
+  render ( <Popup />, document.getElementById ( 'root' ) );
+}

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Content script app should render links message if links are present: <section>
+exports[`Content script app should match the snapshot: <section>
         <a href="http://localhost/first-link">first link</a>
         <a href="http://localhost/second-link">second link</a>
         <a href="http://localhost/third-link">third link</a>
@@ -26,7 +26,7 @@ exports[`Content script app should render links message if links are present: <s
     class="content"
   >
     Hello.... this page has 
-    3
+    0
      links on it
   </div>
 </section>

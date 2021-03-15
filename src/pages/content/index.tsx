@@ -22,35 +22,26 @@ export const App = () => {
   };
 
   useEffect ( () => {
-    let toUpdate = true;
-    const links: Link[] = [
-      ...document.querySelectorAll ( 'a' ),
+    const links: Link[] = [ ...document.querySelectorAll ( 'a' ),
     ]
       .map ( ( { href, textContent } ) => ( {
         href,
         textContent 
       } ) )
       .filter ( ( link ) => link.textContent );
-    const newX = window.location.hostname;
+    const { hostname } = window.location;
 
-    if ( toUpdate ) {
-      saveLinks ( {
-        [ newX ]: links 
-      } ).then ( ( resp ) => {
-        sendMessage ( linksSaved )
-          .then ( resp => {
-            if ( typeof resp === 'boolean' ) {
-              setLinksCount ( links.length );
-            }
-          } );
-      } );
-    }
-
-    return () => {
-      toUpdate = false;
-    };
-
-  } );
+    saveLinks ( {
+      [ hostname ]: links 
+    } ).then ( ( resp ) => {
+      sendMessage ( linksSaved )
+        .then ( resp => {
+          if ( typeof resp === 'boolean' ) {
+            setLinksCount ( links.length );
+          }
+        } );
+    } );
+  }, [] );
 
   useEffect ( () => {
     setTimeout ( () => {

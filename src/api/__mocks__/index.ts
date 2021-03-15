@@ -1,10 +1,11 @@
+import { ExtensionMessages } from '../../types';
 import './api';
 
 jest.mock ( './api', () => {
   return {
-    getRandomNumber: () => 4,
+    getRandomNumber: () => ( Math.random () * 50 ),
     wrapperBrowserAPI: {
-      getStorage: () => ( {
+      getStorage: () => new Promise ( ( resolve, reject ) => resolve ( {
         'links-saved': {
           localhost: [
             {
@@ -21,9 +22,27 @@ jest.mock ( './api', () => {
             }
           ]
         }
-      } ),
-      setStorage: () => 4,
-      sendMessage: () => new Promise ( ( resolve, reject ) => resolve ( true ) ),
+      } ) ),
+      setStorage: () => new Promise ( ( resolve, reject ) => resolve ( true ) ),
+      sendMessage: ( msg: ExtensionMessages ) => {
+        let result;
+
+        switch ( msg ) {
+        case ( 'links-saved' ):
+          result = true;
+          break;
+
+        case ( 'get-active-tab' ):
+          result = 'http://localhost';
+          break;
+        
+        default:
+          result = false;
+          break;
+        }
+
+        return new Promise ( ( resolve, reject ) => resolve ( result ) );
+      },
       getExtensionName: () => 'myExtensionId',
       ondMessage: () => new Promise ( ( resolve, reject ) => resolve ( true ) ),
     }

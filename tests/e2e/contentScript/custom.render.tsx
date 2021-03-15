@@ -38,7 +38,10 @@ const customRender = (
     );
   };
 
-  return render ( ui, { wrapper: RenderWrapper, ...options } );
+  return render ( ui, {
+    wrapper: RenderWrapper,
+    ...options 
+  } );
 };
 
 export * from '@testing-library/react';
