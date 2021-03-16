@@ -9,15 +9,18 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
     tsconfigRootDir: __dirname,
-    project: ["./tsconfig.json"],
+    project: ['./tsconfig.json'],
   },
   plugins: [
-    '@typescript-eslint'
+    '@typescript-eslint',
+    
   ],
   extends: [
-    "plugin:react-hooks/recommended"
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
   ],
   rules: {
+    // ts
     indent: [
       'error',
       2
@@ -77,12 +80,26 @@ module.exports = {
       'error',
       'always'
     ],
-    "object-curly-newline": ["error", {
-        "ObjectExpression": "always",
-        "ObjectPattern": { "multiline": true },
-        "ImportDeclaration": "never",
-        "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+    'object-curly-newline': ['error', {
+        'ObjectExpression': 'always',
+        'ObjectPattern': { 'multiline': true },
+        'ImportDeclaration': 'never',
+        'ExportDeclaration': { 'multiline': true, 'minProperties': 3 }
     }],
-    "object-property-newline": ["error"]
+    'object-property-newline': ['error'],
+
+    // tsx
+    'react/jsx-max-props-per-line': [2, { 'when': 'multiline' }],
+    'react/jsx-indent-props': [2, 'first'],
+    'react/jsx-wrap-multilines': [2, {
+      'declaration': 'parens',
+      'assignment': 'parens',
+      'return': 'parens',
+      'arrow': 'parens',
+      }
+    ],
+    'react/jsx-props-no-multi-spaces': [2],
+    'react/jsx-one-expression-per-line': [2, { 'allow': 'literal' }],
+    'react/jsx-closing-bracket-location': [1, 'line-aligned']
   }
 };
