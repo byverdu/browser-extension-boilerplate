@@ -18,7 +18,7 @@ describe ( 'List Component', () => {
     }
   ];
   beforeEach ( () => {
-    component = shallow ( <List links={links} /> );
+    component = shallow ( <List links={links} onclick={() => ''} /> );
   } );
 
   it ( 'should render ListItems with the correct props', () => {

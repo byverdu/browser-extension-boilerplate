@@ -1,4 +1,4 @@
-import { ExtensionMessages } from '../../types';
+import { ExtensionMessagesType } from '../../types';
 import './api';
 
 jest.mock ( './api', () => {
@@ -24,7 +24,7 @@ jest.mock ( './api', () => {
         }
       } ) ),
       setStorage: () => new Promise ( ( resolve, reject ) => resolve ( true ) ),
-      sendMessage: ( msg: ExtensionMessages ) => {
+      sendMessage: ( msg: ExtensionMessagesType ) => {
         let result;
 
         switch ( msg ) {

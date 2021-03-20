@@ -3,9 +3,9 @@ import { browser } from 'webextension-polyfill-ts';
 
 const { onMessage, onInstalled, getStorage } = wrapperBrowserAPI;
 
-onInstalled ();
-
 browser.storage.local.clear ();
+
+onInstalled ();
 
 onMessage ( async ( msg, sender ) => {
   if ( msg && msg.type ) {
@@ -16,6 +16,9 @@ onMessage ( async ( msg, sender ) => {
 
     case ( 'get-active-tab' ):
       return getActiveTabHandler ();
+
+    default:
+      return;
     }
   }
 } );

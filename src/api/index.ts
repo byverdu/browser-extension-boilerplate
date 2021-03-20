@@ -1,11 +1,11 @@
 import { browser } from 'webextension-polyfill-ts';
-import { WrapperBrowserAPI } from 'types';
+import { GetActiveTabResp, WrapperBrowserAPI, MESSAGES_TYPES } from 'types';
 
-export async function linksSavedHandler (): Promise<string|boolean> {
+export async function linksSavedHandler (): Promise<string | boolean> {
   return browser.runtime.lastError ? browser.runtime.lastError.message : true;
 }
 
-export async function getActiveTabHandler (): Promise<string> {
+export async function getActiveTabHandler (): Promise<GetActiveTabResp> {
   if ( browser.runtime.lastError ) {
     return browser.runtime.lastError.message;
   }
@@ -16,7 +16,10 @@ export async function getActiveTabHandler (): Promise<string> {
   } );
   const [ activeTab ] = tab;
 
-  return activeTab.url;
+  return {
+    url: activeTab.url,
+    id: activeTab.id
+  };
 };
 
 export const getRandomNumber = ( qtty: number = 5 ): string => {
@@ -30,7 +33,7 @@ export const getRandomNumber = ( qtty: number = 5 ): string => {
 
 async function afterInstallScript () {
   try {
-    await wrapperBrowserAPI.setStorage ( 'links-saved', {
+    await wrapperBrowserAPI.setStorage ( MESSAGES_TYPES.LINKS_SAVED, {
     } );
 
     browser.tabs.query ( {
@@ -38,10 +41,20 @@ async function afterInstallScript () {
     } )
       .then ( tabs => {
         tabs.forEach ( tab => {
-          browser.tabs.executeScript ( tab.id, {
-            file: './content.js' 
-          } )
-            .then ( () => console.log ( 'script injected' ) )
+          Promise.all ( [
+            browser.tabs.executeScript ( tab.id, {
+              file: 'node_vendors.js' 
+            } ),
+            browser.tabs.executeScript ( tab.id, {
+              file: 'common-background-content-popup.js' 
+            } ),
+            browser.tabs.executeScript ( tab.id, {
+              file: 'content.js' 
+            } ),
+          ] )
+            .then ( () => {
+              console.log ( 'All content scripts loaded' );
+            } )
             .catch ( ( e ) => console.log ( 'afterInstallScript tabs.executeScript', e ) );
         } );
       } )
@@ -63,8 +76,10 @@ export const wrapperBrowserAPI: WrapperBrowserAPI = {
     [ key ]: value 
   } ),
   getStorage: ( key ) => browser.storage.local.get ( key ),
-  sendMessage: ( msg ) => browser.runtime.sendMessage ( {
-    type: msg 
+  sendMessage: ( { type, payload } ) => browser.runtime.sendMessage ( {
+    type,
+    payload
   } ),
+  sendTabMessage: ( tabId, msg ) => browser.tabs.sendMessage ( tabId, msg ),
   onMessage: ( callback ) => browser.runtime.onMessage.addListener ( callback )
 };
