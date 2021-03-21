@@ -18,7 +18,24 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve(__dirname, 'build'),
   },
-  devtool: ENV === 'development' ? 'source-map' : undefined,
+  devtool: ENV === 'development' ? 'inline-source-map' : undefined,
+   optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: "node_vendors",
+          test: /[\\/]node_modules[\\/]/,
+          chunks: "all",
+        },
+        common: {
+           automaticNameDelimiter: '-',
+           test: /[\\/]src[\\/]api[\\/]/,
+           chunks: "all",
+           minSize: 0,
+         },
+      },
+    },
+ },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json', '.scss', 'css'],
     modules: [path.join(__dirname, 'node_modules')],
@@ -83,6 +100,14 @@ module.exports = {
             },
           },
           'sass-loader',
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
         ],
       },
     ],

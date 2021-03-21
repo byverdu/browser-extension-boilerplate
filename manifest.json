@@ -19,6 +19,8 @@
   "background": {
     "scripts": [
       "browser-polyfill.min.js",
+      "node_vendors.js",
+      "common-background-content-popup.js",
       "background.js"
     ],
     "persistent": true
@@ -30,6 +32,8 @@
       ],
       "js": [
         "browser-polyfill.min.js",
+        "node_vendors.js",
+        "common-background-content-popup.js",
         "content.js"
       ]
     }
