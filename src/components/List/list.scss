@@ -1,0 +1,45 @@
+ .list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-evenly;
+
+    &::after {
+      content: '';
+      flex: auto;
+    }
+    
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      width: 150px;
+      flex-wrap: nowrap;
+      align-items: center;
+      margin: 6px 0;
+
+      &::before {
+        content: '';
+        height: 20px;
+        width: 20px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-image: url('../../images/link.svg');
+      }
+
+      &-link {
+        flex-basis: 75%;
+        word-break: break-word;
+        text-decoration: underline;
+        color: blue;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &.visited {
+          color: rgb(211, 105, 6);
+        }
+      }
+    }
+  }

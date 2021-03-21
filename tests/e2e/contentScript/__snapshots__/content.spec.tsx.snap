@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Content script app should match the snapshot: <section>
+        <a href="http://localhost/first-link">first link</a>
+        <a href="http://localhost/second-link">second link</a>
+        <a href="http://localhost/third-link">third link</a>
+        <div class="content">Hello.... this page has 3 links on it</div>
+      </section> 1`] = `
+<section>
+  <a
+    href="http://localhost/first-link"
+  >
+    first link
+  </a>
+  <a
+    href="http://localhost/second-link"
+  >
+    second link
+  </a>
+  <a
+    href="http://localhost/third-link"
+  >
+    third link
+  </a>
+  <div
+    class="content"
+  >
+    Hello.... this page has 
+    0
+     links on it
+  </div>
+</section>
+`;
