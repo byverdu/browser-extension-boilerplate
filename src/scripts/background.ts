@@ -1,5 +1,6 @@
-import { wrapperBrowserAPI, linksSavedHandler, getActiveTabHandler } from 'api';
 import { browser } from 'webextension-polyfill-ts';
+
+import { wrapperBrowserAPI, linksSavedHandler, getActiveTabHandler } from 'api/extension.api';
 
 const { onMessage, onInstalled, getStorage } = wrapperBrowserAPI;
 

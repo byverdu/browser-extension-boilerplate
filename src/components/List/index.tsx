@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo, MouseEvent } from 'react';
-import { Link } from 'types';
-import { getRandomNumber } from 'api';
+
+import { Link } from 'types/extension.types';
+
+import { getRandomNumber } from 'api/extension.api';
 
 import styles from './list.scss';
 
@@ -33,7 +35,7 @@ function ListItem ( { href, textContent, onclick }: ListItemProps ): JSX.Element
 
 
 
-function List ( { links = [], onclick }: ListProps ) {
+export function List ( { links = [], onclick }: ListProps ) {
   const memoLinks = useMemo ( () => links, [ links ] );
   return (
     <ul className={styles.list}>
@@ -47,5 +49,3 @@ function List ( { links = [], onclick }: ListProps ) {
     </ul>
   );
 };
-
-export default List;

@@ -1,28 +1,31 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 
-import List from '../../src/Components/List';
+import { List } from '../../src/components/list';
 
 jest.mock ( '../../src/api' );
 
 describe ( 'List Component', () => {
   let component: ShallowWrapper;
+  const onclick = jest.fn ();
   const links = [
     {
       href: 'http://localhost:9000',
-      textContent: 'sweet home' 
+      onclick,
+      textContent: 'sweet home',
     },
     {
       href: '127.0.0.1',
-      textContent: 'sweet home too' 
+      onclick,
+      textContent: 'sweet home too',
     }
   ];
   beforeEach ( () => {
-    component = shallow ( <List links={links} onclick={() => ''} /> );
+    component = shallow ( <List links={links} onclick={onclick} /> );
   } );
 
   it ( 'should render ListItems with the correct props', () => {
     expect ( component.find ( 'ListItem' ) ).toHaveLength ( 2 );
-    expect ( component.find ( 'ListItem' ).at ( 0 ).props () ).toEqual ( links[ 0 ] );
+    expect ( component.find ( 'ListItem' ).at ( 0 ).props () ).toStrictEqual ( links[ 0 ] );
   } );
 } );

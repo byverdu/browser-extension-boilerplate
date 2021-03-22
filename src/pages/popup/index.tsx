@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { render } from 'react-dom';
 
-import { wrapperBrowserAPI } from 'api';
-import { GetActiveTabResp, Link, MESSAGES_TYPES } from 'types';
+import { GetActiveTabResp, Link } from 'types/extension.types';
 
-import { List, Header } from 'Components';
+import { wrapperBrowserAPI, MESSAGES_TYPES } from 'api/extension.api';
+
+import { Header } from 'components/header';
+import { List } from 'components/list';
+
 import styles from './popup.scss';
 
 const { getStorage, sendMessage, sendTabMessage } = wrapperBrowserAPI;

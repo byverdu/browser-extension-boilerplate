@@ -25,18 +25,20 @@ const customRender = (
   { withLinks, ...options }: RenderOptionsExtension
 ) => {
 
-  const RenderWrapper: FC = ( { children } ) => {
+  function RenderWrapper ( { children }: any ) {
     return (
       <section>
         {
           withLinks
-            ? links.map ( ( { href, textContent } ) => <a key={href} href={href}>{textContent}</a> )
+            ? links.map ( ( { href, textContent } ) => ( <a key={href} href={href}>
+              {textContent}
+            </a> ) )
             : 'No links'
         }
         {children}
       </section>
     );
-  };
+  }
 
   return render ( ui, {
     wrapper: RenderWrapper,

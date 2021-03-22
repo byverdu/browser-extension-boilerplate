@@ -1,9 +1,15 @@
-import { ExtensionMessagesType } from '../../types';
-import './api';
+import '../extension.api';
 
-jest.mock ( './api', () => {
+import { ExtensionMessagesType } from '../../types/extension.types';
+
+jest.mock ( '../extension.api.ts', () => {
   return {
     getRandomNumber: () => ( Math.random () * 50 ),
+    MESSAGES_TYPES: {
+      LINKS_SAVED: 'links-saved',
+      GET_ACTIVE_TAB: 'get-active-tab',
+      FIND_LINK: 'find-link',
+    },
     wrapperBrowserAPI: {
       getStorage: () => new Promise ( ( resolve, reject ) => resolve ( {
         'links-saved': {
@@ -24,16 +30,19 @@ jest.mock ( './api', () => {
         }
       } ) ),
       setStorage: () => new Promise ( ( resolve, reject ) => resolve ( true ) ),
-      sendMessage: ( msg: ExtensionMessagesType ) => {
+      sendMessage: ( msg: { type: ExtensionMessagesType } ) => {
         let result;
 
-        switch ( msg ) {
+        switch ( msg.type ) {
         case ( 'links-saved' ):
           result = true;
           break;
 
         case ( 'get-active-tab' ):
-          result = 'http://localhost';
+          result = {
+            url: 'http://localhost',
+            id: 30
+          };
           break;
         
         default:
@@ -44,7 +53,10 @@ jest.mock ( './api', () => {
         return new Promise ( ( resolve, reject ) => resolve ( result ) );
       },
       getExtensionName: () => 'myExtensionId',
-      ondMessage: () => new Promise ( ( resolve, reject ) => resolve ( true ) ),
+      onMessage: () => new Promise ( ( resolve, reject ) => resolve ( { 
+        id: 30,
+        payload: 'http://localhost/second-link' 
+      } ) ),
     }
   };
 } );

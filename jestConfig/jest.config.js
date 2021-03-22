@@ -7,6 +7,7 @@ module.exports = {
   moduleNameMapper: {
     'api': '<rootDir>/src/api/__mocks__/',
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
+    'components\/(.*)$': '<rootDir>/src/components/$1'
   },
   rootDir: '../'
 };

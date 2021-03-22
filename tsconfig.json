@@ -1,11 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
-    "paths": {
-      "types/*": ["types/*"],
-      "api/*": ["api/*"],
-      "Components/*": ["Components/*"]
-    },
     "sourceMap": true,
     "skipLibCheck": true,
     "noImplicitAny": false,
@@ -18,5 +13,5 @@
     "types": ["node", "jest", "enzyme", "@testing-library/jest-dom"],
   },
   "include": ["src/**/*", "tests/**/*", "jestConfig/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", ".eslintrc.js"]
 }

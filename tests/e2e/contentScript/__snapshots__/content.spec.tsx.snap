@@ -25,9 +25,11 @@ exports[`Content script app should match the snapshot: <section>
   <div
     class="content"
   >
-    Hello.... this page has 
+    Hello.... this page has
+     
     0
-     links on it
+     
+    links on it
   </div>
 </section>
 `;

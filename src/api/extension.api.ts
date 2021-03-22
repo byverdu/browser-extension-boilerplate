@@ -1,5 +1,12 @@
 import { browser } from 'webextension-polyfill-ts';
-import { GetActiveTabResp, WrapperBrowserAPI, MESSAGES_TYPES } from 'types';
+
+import { GetActiveTabResp, WrapperBrowserAPI } from 'types/extension.types';
+
+export const MESSAGES_TYPES =  {
+  LINKS_SAVED: 'links-saved',
+  GET_ACTIVE_TAB: 'get-active-tab',
+  FIND_LINK: 'find-link',
+} as const;
 
 export async function linksSavedHandler (): Promise<string | boolean> {
   return browser.runtime.lastError ? browser.runtime.lastError.message : true;

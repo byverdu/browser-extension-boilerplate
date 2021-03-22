@@ -21,9 +21,3 @@ export interface WrapperBrowserAPI {
   sendTabMessage: ( tabId: number, msg: ExtensionMessage ) => Promise<unknown>
   onMessage: ( callback:  ( msg: ExtensionMessage, sender: Runtime.MessageSender ) => void | Promise<unknown> ) => void
 }
-
-export const MESSAGES_TYPES =  {
-  LINKS_SAVED: 'links-saved',
-  GET_ACTIVE_TAB: 'get-active-tab',
-  FIND_LINK: 'find-link',
-} as const;

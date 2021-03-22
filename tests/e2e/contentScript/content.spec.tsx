@@ -11,7 +11,6 @@ describe ( 'Content script app', () => {
     } );
 
     await waitFor ( () => {
-
       expect ( getByText ( 'Hello.... this page has 0 links on it' ) ).toBeInTheDocument (); 
     } );
   } );
@@ -22,7 +21,7 @@ describe ( 'Content script app', () => {
     } );
 
     await waitFor ( () => {
-      expect ( getByText ( 'Hello.... this page has 3 links on it' ) ).toBeInTheDocument (); 
+      expect ( getByText ( 'Hello.... this page has 3 links on it' ) ).toBeInTheDocument ();
       expect ( container.querySelectorAll ( 'a' ) ).toHaveLength ( 3 );
     } );
   } );

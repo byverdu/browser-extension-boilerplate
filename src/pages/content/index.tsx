@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { render } from 'react-dom';
 
-import { wrapperBrowserAPI } from 'api';
-import { Link, MESSAGES_TYPES } from 'types';
+import { Link,  } from 'types/extension.types';
+
+import { wrapperBrowserAPI, MESSAGES_TYPES } from 'api/extension.api';
+
 import styles from './content.scss';
 
-const { setStorage, sendMessage, getExtensionName, onMessage } = wrapperBrowserAPI;
+const { setStorage, sendMessage, getExtensionName, onMessage, getStorage } = wrapperBrowserAPI;
 const extensionName = getExtensionName ();
 const { LINKS_SAVED, FIND_LINK } = MESSAGES_TYPES;
 const httpAndHostNameRegex = /([a-z][a-z0-9+\-.]*:(\/\/[^/?#]+)?)?/;
@@ -14,7 +16,7 @@ export const App = () => {
   const [ linksCount, setLinksCount ] = useState<number> ( 0 );
   const container = useRef<HTMLDivElement> ();
   const saveLinks = async ( links ) => {
-    const oldStorage = await wrapperBrowserAPI.getStorage ( LINKS_SAVED );
+    const oldStorage = await getStorage ( LINKS_SAVED );
     const newStorage = {
       ...oldStorage[ LINKS_SAVED ],
       ...links
@@ -24,9 +26,8 @@ export const App = () => {
   };
 
   const onMessageHandler = async () => {
-    return await onMessage ( ( { type, payload } ) => {
+    await onMessage ( ( { type, payload } ) => {
       if ( type === FIND_LINK && typeof payload === 'string' ) {
-        console.log ( 'payload onMessageHandler', payload );
         const pathname = payload.includes ( 'http' )
           ? payload.replace ( httpAndHostNameRegex , '' )
           : payload;
@@ -71,7 +72,8 @@ export const App = () => {
   }, [] );
 
   useEffect ( () => {
-    onMessageHandler ().then ( console.log );
+    onMessageHandler ()
+      .then ( () => console.log ( 'onMessageHandler' ) );
   }, [] );
 
   useEffect ( () => {

@@ -3,10 +3,10 @@
 /* eslint-disable */
 
 declare const styles = {
-    list: 'list__list--t7B83',
-    listItem: 'list__list-item--1dLox',
-    listItemLink: 'list__list-item-link--84UWR',
-    visited: 'list__visited--1WL-d',
+    list: 'list__list--nmQmc',
+    listItem: 'list__list-item--3VK6d',
+    listItemLink: 'list__list-item-link--2VfYS',
+    visited: 'list__visited--3D4ln',
 } as const;
 
 export type ClassName = string;
