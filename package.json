@@ -9,9 +9,9 @@
     "test:e2e": "ENV=test jest --config ./jestConfig/jest.config.ui.js e2e",
     "test": "yarn test:api && yarn test:ui && yarn test:e2e",
     "dev": "ENV=development webpack --watch",
-    "dev:stats": "ENV=development webpack --profile --json > stats.dev.json && webpack-bundle-analyzer ./stats.json ./build",
+    "dev:stats": "ENV=development webpack --profile --json > stats.dev.json && webpack-bundle-analyzer ./stats.dev.json ./build",
     "build": "ENV=production webpack",
-    "build:stats": "ENV=production webpack --profile --json > stats.prod.json && webpack-bundle-analyzer ./stats.json ./build",
+    "build:stats": "ENV=production webpack --profile --json > stats.prod.json && webpack-bundle-analyzer ./stats.prod.json ./build",
     "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "lint:hook": "tsc --project tsconfig.json --noEmit && yarn lint"
@@ -32,6 +32,7 @@
   "keywords": [
     "browser extension",
     "chrome extension",
+    "firefox extension",
     "boilerplate extension"
   ],
   "author": "Albert Vallverdu <@byverdu><byverdu@gmail.com>",

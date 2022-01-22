@@ -5,8 +5,8 @@ import { GetActiveTabResp, Link } from 'types/extension.types';
 
 import { wrapperBrowserAPI, MESSAGES_TYPES } from 'api/extension.api';
 
-import { Header } from 'components/header';
-import { List } from 'components/list';
+import { Header } from 'components/Header';
+import { List } from 'components/List';
 
 import styles from './popup.scss';
 

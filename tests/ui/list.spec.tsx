@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 
-import { List } from '../../src/components/list';
+import { List } from '../../src/components/List';
 
 jest.mock ( '../../src/api' );
 
