@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "test",
-  "description": "Keep track of what you copy/paste on the web",
+  "name": "link counter",
+  "description": "Count how many links has a page",
   "version": "1.0",
   "icons": {
     "128": "images/128.png",
